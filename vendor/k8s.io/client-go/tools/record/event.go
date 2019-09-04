@@ -21,7 +21,7 @@ import (
 	"math/rand"
 	"time"
 
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -131,6 +131,7 @@ func recordToSink(sink EventSink, event *v1.Event, eventCorrelator *EventCorrela
 	eventCopy := *event
 	event = &eventCopy
 	result, err := eventCorrelator.EventCorrelate(event)
+	klog.Infof("event correlation result: %v", result)
 	if err != nil {
 		utilruntime.HandleError(err)
 	}
